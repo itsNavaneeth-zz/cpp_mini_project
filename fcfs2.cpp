@@ -38,7 +38,7 @@ class fcfs : public schedule
     wt[0] = 0;
 
     // calculating waiting time
-    for (int i = 1; i < n; i++)
+    for (int i = 1; i < n; i++) //*remember why its i = 1
     {
         // Add burst time of previous processes
         service_time[i] = service_time[i - 1] + bt[i - 1];
