@@ -1,136 +1,86 @@
-// C++ program to implement
-// Round Robin Scheduling with
-// different arrival time
-#include<iostream>
-#include<iomanip>
+//C++ Program to implement Round Robin 
+//Scheduling CPU Algorithm
+
+#include <iostream>
+#include <vector>
+
+/*at = Arrival time,
+bt = Burst time,
+time_quantum= Quantum time
+tat = Turn around time,
+wt = Waiting time*/
+
 using namespace std;
- 
-void CalcWaitingTime(int process[], 
-                     int wt_time[], int n, 
-                     int burst_time[], 
-                     int quantum, 
-                     int completion_time[], 
-                     int arrival_time[])
-{
-  // Copy the value of brust 
-  // time array into waiting 
-  // time array.
-  int rem_time[n];
- 
-  for(int i = 0; i < n; i++)
-    rem_time[i] = burst_time[i];
- 
-  int t = 0;
-  int arrival = 0;
- 
-  // Processing until the value 
-  // of element of rem_time array 
-  // is 0
-  while(true)
-  {
-    bool done = true;
-    for(int i = 0; i < n; i++)
-    {
-      if(rem_time[i] > 0)
-      {
-        done = false;
-        if(rem_time[i] > quantum && 
-           arrival_time[i] <= arrival)
-        {
-          t += quantum;
-          rem_time[i] -= quantum;
-          arrival++;
-        }
-        else
-        {
-          if(arrival_time[i] <= arrival)
-          {
-            arrival++;
-            t += rem_time[i];
-            rem_time[i] = 0;
-            completion_time[i] = t; 
-          }
-        }
-      }
-    }
- 
-    if(done==true) 
-      break;
-  } 
-}
- 
-void CalcTurnAroundTime(int process[], 
-                        int wt_time[], int n, 
-                        int burst_time[], 
-                        int tat_time[], 
-                        int completion_time[], 
-                        int arrival_time[])
-{
-  for(int i = 0; i < n; i++)
-  {
-    tat_time[i] = completion_time[i] - 
-                  arrival_time[i];
-    wt_time[i] = tat_time[i] - 
-                 burst_time[i];
-  }
-}
- 
-void CalcAvgTime(int process[], int n, 
-                 int burst_time[], 
-                 int quantum, 
-                 int arrival_time[])
-{
-  int wt_time[n];
-  int tat_time[n];
-  int completion_time[n];
-  int total_wt = 0, total_tat = 0;
-  CalcWaitingTime(process, wt_time, 
-                  n, burst_time, 
-                  quantum, 
-                  completion_time, 
-                  arrival_time); 
-  CalcTurnAroundTime(process, wt_time, 
-                     n, burst_time, 
-                     tat_time, 
-                     completion_time, 
-                     arrival_time);
-  cout << setw(9) << "PROCESS" << 
-          setw(14) << "ARRIVAL TIME" << 
-          setw(12) << "BURST TIME" << 
-          setw(17) << "COMPLETION TIME" <<
-          setw(18) << "TURN AROUND TIME" <<
-          setw(16) << "WAITING TIME\n";
- 
-  for (int i = 0; i < n; i++) 
-  { 
-    total_wt = total_wt + wt_time[i]; 
-    total_tat = total_tat + tat_time[i]; 
-    cout << setw(6) << i + 1 << 
-            setw(11) << arrival_time[i] << 
-            setw(12) << burst_time[i] << 
-            setw(17) << completion_time[i] <<
-            setw(15) << tat_time[i] <<
-            setw(16) << wt_time[i] << endl; 
-  } 
- 
-  cout << "\nAVERAGE WAITING TIME : " <<
-          (float)total_wt / (float)n; 
-  cout << "\nAVERAGE TURN AROUND TIME : " <<
-          (float)total_tat / (float)n; 
-}
- 
-// Driver code
-int main()
-{
-  int quantum = 2;
-  int arrival_time[] = {0,1,2,3};
-  int process[] = {1,2,3,4};
-  int burst_time[] = {5,4,2,1};
-  int n = sizeof process /
-          sizeof process[0];
-  CalcAvgTime(process, n, 
-              burst_time, 
-              quantum, 
-              arrival_time);
-  return 0;
+
+int main(){
+	int i,n,time,remain,temps=0,time_quantum;
+
+	int wt=0,tat=0;
+
+	cout<<"Enter the total number of process="<<endl;
+	cin>>n;
+
+	remain=n;
+	// assigning the number of process to remain variable
+
+	vector<int>at(n);
+	vector<int>bt(n);
+	vector<int>rt(n);
+	//dynamic array declaration using vector method of (STL)
+	//STL standard template library of C++
+
+	cout<<"Enter the Arrival time, Burst time for All the processes"<<endl;
+	for(i=0;i<n;i++)
+	{
+		cin>>at[i];
+		cin>>bt[i];
+		rt[i]=bt[i];
+	}
+
+	cout<<"Enter the value of time QUANTUM:"<<endl;
+	cin>>time_quantum;
+
+	cout<<"\n\nProcess\t:Turnaround Time:Waiting Time\n\n";
+	for(time=0,i=0;remain!=0;)
+	{
+		if(rt[i]<=time_quantum && rt[i]>0)
+		{
+			time += rt[i];
+			//Addition using shorthand operators
+			rt[i]=0;
+			temps=1;
+		}
+
+		else if(rt[i]>0)
+		{
+			rt[i] -= time_quantum;
+			//Subtraction using shorthand operators
+			time += time_quantum;
+			//Addition using shorthand operators
+		}
+
+		if(rt[i]==0 && temps==1)
+		{
+			remain--;
+			//Desplaying the result of wating, turn around time:
+			printf("Process{%d}\t:\t%d\t:\t%d\n",i+1,time-at[i],time-at[i]-bt[i]);
+			cout<<endl;
+
+			wt += time-at[i]-bt[i];
+			tat += time-at[i];
+			temps=0;
+		}
+
+		if(i == n-1)
+			i=0;
+		else if(at[i+1] <= time)
+			i++;
+		else
+			i=0;
+	}
+
+	cout<<"Average waiting time "<<wt*1.0/n<<endl;
+	cout<<"Average turn around time "<<tat*1.0/n<<endl;;
+
+	return 0;
 }
