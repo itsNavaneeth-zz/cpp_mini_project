@@ -13,19 +13,7 @@ class schedule
         void findTurnAroundTime(int processes[], int n, int bt[],
                         int wt[], int tat[]);
         void findavgTime(int processes[], int n, int bt[], int at[]);
-         void readData()
-         {
-             for(int i=0;i<5;i++)
-             {
-                 cout<<"Enter burst time for process number "<<i+1<<": ";
-                 cin>>bt[i];
-             }
-             for(int i=0;i<5;i++)
-             {
-                 cout<<"Enter arrival time for process number "<<i+1<<": ";
-                 cin>>at[i];
-             }
-         }
+         
 };
 class fcfs : public schedule
 {
