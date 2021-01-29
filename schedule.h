@@ -15,6 +15,7 @@ public:
             at[i] = 0;
         }
     }
+    //fcfs
     void findWaitingTime(int processes[], int n, int bt[], int wt[], int at[]);
     void findTurnAroundTime(int processes[], int n, int bt[], int wt[], int tat[]);
     void findavgTime(int processes[], int n, int bt[], int at[]);
@@ -24,6 +25,7 @@ public:
 
     //priority
     void computePri(int processes[],int bt[], int n, int pr[]);
+    //fucn to return the ATAT and AWT 
     float sendAwt();
     float sendAtat();
   

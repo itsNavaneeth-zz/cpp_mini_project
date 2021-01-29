@@ -1,17 +1,10 @@
-// C++ program for implementation of FCFS
-// *scheduling with different arrival time
 #include <iostream>
-
+//including various code files using modular programming technique
 #include "schedule.h"
 #include "fcfs2.h"
 #include "priority.h"
 #include "sjf1.h"
 using namespace std;
-//base class to inherit the properties
-
-
-// Function to find the waiting time for all
-// processes
 
 // Driver code
 int main()
@@ -25,7 +18,7 @@ int main()
     switch(choice)
     {
         case 1:
-        {
+        {//reading scheduling parameters for the algos
             fcfs f;
             sjf s;
             priority p;
@@ -49,7 +42,7 @@ int main()
             break;
         }
         case 2:
-        {
+        {//computing tat and wt 
             int processes[] = {1, 2, 3, 4, 5};
             int n = 5;
         
@@ -67,7 +60,7 @@ int main()
             break;
         }
       case 3:
-      {
+      {//storing the ATAT and AWT into an array and finding minimum from them
           fcfs f;
           sjf s;
           priority p;

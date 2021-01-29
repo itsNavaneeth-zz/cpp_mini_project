@@ -1,5 +1,3 @@
-// C++ program for implementation of FCFS
-// *scheduling with different arrival time
 #include <iostream>
 #include "schedule.h"
 
@@ -68,22 +66,7 @@ void findavgTime(int processes[], int n, int bt[], int at[])
                  <<  bt[i]<< "\t\t" << wt[i] << "\t\t "
                  << tat[i] << "\t\t " << compl_time << endl;
         }
-    // cout << "Processes "
-    //      << " Burst Time "
-    //      << " Arrival Time "
-    //      << " Waiting Time "
-    //      << " Turn-Around Time "
-    //      << " Completion Time \n";
-    // int total_wt = 0, total_tat = 0;
-    // for (int i = 0; i < n; i++)
-    // {
-    //     total_wt = total_wt + wt[i];
-    //     total_tat = total_tat + tat[i];
-    //     int compl_time = tat[i] + at[i];
-    //     cout << " " << i + 1 << "\t\t" << bt[i] << "\t\t"
-    //          << at[i] << "\t\t" << wt[i] << "\t\t "
-    //          << tat[i] << "\t\t " << compl_time << endl;
-    // }
+   
         awt = (float)total_wt / (float)n;
         atat = (float)total_tat / (float)n;
     cout << "Average waiting time = "
@@ -102,7 +85,3 @@ float sendAwt()
 
 };
 
-// Function to find the waiting time for all
-// processes
-
-// Driver code

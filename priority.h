@@ -3,7 +3,6 @@
 #include "schedule.h"
 using namespace std;
  
-
 class priority : public schedule
 {
     int tat[5],pr[5];
