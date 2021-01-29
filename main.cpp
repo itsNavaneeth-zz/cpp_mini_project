@@ -1,22 +1,25 @@
 // C++ program for implementation of FCFS
 // *scheduling with different arrival time
 #include <iostream>
+#include<vector>
 using namespace std;
 //base class to inherit the properties
 class schedule
 {
 protected:
-    int processess[5], bt[5], wt[5], at[5], n = 5;
-
+    int processess[5], bt[5], wt[5], at[5], pr[5], n = 5;
+    float atat,awt;
 public:
-    void findWaitingTime(int processes[], int n, int bt[],
-                         int wt[], int at[]);
-    void findTurnAroundTime(int processes[], int n, int bt[],
-                            int wt[], int tat[]);
+    void findWaitingTime(int processes[], int n, int bt[], int wt[], int at[]);
+    void findTurnAroundTime(int processes[], int n, int bt[], int wt[], int tat[]);
     void findavgTime(int processes[], int n, int bt[], int at[]);
 
     //sjf
     void computeSJF(int processes[], int at[], int n, int bt[]);
+
+    //priority
+    void computePri(int processes[],int bt[], int n, int pr[]);
+    
 };
 class fcfs : public schedule
 {
@@ -36,7 +39,7 @@ public:
 
             // Find waiting time for current process =
             // sum - at[i]
-            wt[i] = service_time[i] - at[i];
+            wt[i] = service_time[i] - at[i] + 1;
 
             // If waiting time for a process is in negative
             // that means it is already in the ready queue
@@ -68,12 +71,8 @@ public:
         findTurnAroundTime(processes, n, bt, wt, tat);
 
         // Display processes along with all details
-        cout << "Processes "
-             << " Burst Time "
-             << " Arrival Time "
-             << " Waiting Time "
-             << " Turn-Around Time "
-             << " Completion Time \n";
+
+cout << "Process-ID\tAT(s)\tBT(s)\tWT(s)\tTT(s)\tET(s)\n";
         int total_wt = 0, total_tat = 0;
         for (int i = 0; i < n; i++)
         {
@@ -83,19 +82,22 @@ public:
             cout << " " << i + 1 << "\t\t" << bt[i] << "\t\t"
                  << at[i] << "\t\t" << wt[i] << "\t\t "
                  << tat[i] << "\t\t " << compl_time << endl;
-        }
 
+       
+        
+        }
+        awt =  (float)total_wt / (float)n;
+        atat = (float)total_tat / (float)n;
         cout << "Average waiting time = "
-             << (float)total_wt / (float)n;
+             << awt;
         cout << "\nAverage turn around time = "
-             << (float)total_tat / (float)n;
+             << atat;
     }
 };
 
 class sjf : public schedule
 {
     int e[5], tat[5];
-    float atat, awt;
 
 public:
     void computeSJF(int processes[], int at[], int n, int bt[])
@@ -164,17 +166,81 @@ public:
         atat = stat / n;
         awt = swt / n;
 
-        cout << "Process-time(s) Arrival-time(s)  Burst-time(s)  Waiting-time(s)  Turnaround-time(s) Exit-time(s)\n";
+        cout << "Process-ID\t\tAT(s)\t\tBT(s)\t\tWT(s)\t\tTT(s)\t\tET(s)\n";
 
         for (int i = 0; i < n; i++)
         {
-            cout << processes[i] << "                " << at[i] << "                " << bt[i] << "                " << wt[i] << "                " << tat[i] << "                          " << e[i] << endl;
+            cout << processes[i] << "\t\t" << at[i] << "\t\t" << bt[i] << "\t\t" << wt[i] << "\t\t" << tat[i] << "\t\t" << e[i] << endl;
         }
 
         cout << "awt=" << awt << " atat=" << atat;
     }
 };
 
+
+class priority : public schedule
+{
+    int tat[5],pr[5];
+public:
+void computePri(int processes[],int bt[],int n,int pr[])
+{
+    int i,j,pos,temp;
+    float avg_tat = 0.0,avg_wt = 0.0,total=0.0;
+    //sorting burst time, priority and process number in ascending order using selection sort
+    for(i=0;i<n;i++)
+    {
+        pos=i;
+        for(j=i+1;j<n;j++)
+        {
+            if(pr[j]<pr[pos])
+                pos=j;
+        }
+ 
+        temp=pr[i];
+        pr[i]=pr[pos];
+        pr[pos]=temp;
+ 
+        temp=bt[i];
+        bt[i]=bt[pos];
+        bt[pos]=temp;
+ 
+        temp=processes[i];
+        processes[i]=processes[pos];
+        processes[pos]=temp;
+    }
+ 
+    wt[0]=0;            //waiting time for first process is zero
+ 
+    //calculate waiting time
+    for(i=1;i<n;i++)
+    {
+        wt[i]=0;
+        for(j=0;j<i;j++)
+            wt[i]+=bt[j];
+ 
+        total+=wt[i];
+    }
+ 
+    avg_wt=total/n;      //average waiting time
+    total=0;
+ 
+    for(i=0;i<n;i++)
+    {
+        tat[i]=bt[i]+wt[i];     //calculate turnaround time
+        total+=tat[i];
+     }
+      avg_tat=total/n; 
+
+      cout << "Process-ID\t\tAT(s)\t\tBT(s)\t\tWT(s)\t\tTT(s)\t\tET(s)\n";
+
+        for (int i = 0; i < n; i++)
+        {
+            cout << processes[i] << "\t\t" << pr[i] << "\t\t" << bt[i] << "\t\t" << wt[i] << "\t\t" << tat[i] << "\t\t" << endl;
+        }
+
+       cout << "awt=" << avg_wt << " atat=" << avg_tat; 
+    }
+};
 
 
 // Function to find the waiting time for all
@@ -183,7 +249,9 @@ public:
 // Driver code
 int main()
 {
-    int arrival_time[5], burst_time[5], priority[5];
+    vector<float>awt[3];
+    vector<float>atat[3];
+    int arrival_time[5], burst_time[5], pri[5];
     int processes[] = {1, 2, 3, 4, 5};
     int n = 5;
 
@@ -197,17 +265,19 @@ int main()
         cout << "Enter arrival time for process number " << i + 1 << ": ";
         cin >> arrival_time[i];
     }
-    // for (int i = 0; i < 5; i++)
-    // {
-    //     cout << "Enter priority for process number " << i + 1 << ": ";
-    //     cin >> priority[i];
-    // }
+    for (int i = 0; i < 5; i++)
+    {
+        cout << "Enter priority for process number " << i + 1 << ": ";
+        cin >> pri[i];
+    }
 
     fcfs f;
     f.findavgTime(processes, n, burst_time, arrival_time);
-
+    cout<<endl;
     sjf s;
     s.computeSJF(processes, arrival_time, n, burst_time);
-
+    cout<<endl;
+    priority p;
+    p.computePri(processes,burst_time,n,pri);
     return 0;
 }

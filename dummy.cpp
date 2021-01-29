@@ -11,10 +11,11 @@ wt = Waiting time*/
 
 using namespace std;
 
-int main(){
+int main()
+{
 	int i,n,time,remain,temps=0,time_quantum;
 
-	int swt=0,stat=0;
+	int wt=0,tat=0;
 
 	cout<<"Enter the total number of process="<<endl;
 	cin>>n;
@@ -25,8 +26,6 @@ int main(){
 	vector<int>at(n);
 	vector<int>bt(n);
 	vector<int>rt(n);
-	vector<int>tat(n);
-	vector<int>wt(n);
 	//dynamic array declaration using vector method of (STL)
 	//STL standard template library of C++
 
@@ -69,38 +68,33 @@ int main(){
 		{
 			remain--;
 			//Desplaying the result of wating, turn around time:
-			tat[i] = time-at[i];
-			wt[i] = time- at[i]-bt[i];
-			//printf("Process{%d}\t:\t%d\t:\t%d\n",i+1,time-at[i],tat[i],wt[i]);
+			printf("Process{%d}\t:\t%d\t:\t%d\n",i+1,time-at[i],time-at[i]-bt[i]);
 			
 			// cout << "Process-time(s) ";
 			cout<<endl;
 
-			swt += time-at[i]-bt[i];
-			stat += time-at[i];
-			//temps=0;
+			wt += time-at[i]-bt[i];
+			tat += time-at[i];
+			temps=0;
 		}
-			if(i == n-1)
+     cout<<"Process-time(s) Arrival-time(s)  Burst-time(s)  Waiting-time(s)  Turnaround-time(s) Exit-time(s)\n";
+
+            for(int i=0;i<n;i++)
+            {
+                cout<<processes[i]<<"                "<<at[i]<<"                "<<bt[i]<<"                "<<wt[i]<<"                "<<tat[i]<<"                          "<<e[i]<<endl;
+            }
+  }
+
+		if(i == n-1)
 			i=0;
 		else if(at[i+1] <= time)
 			i++;
 		else
 			i=0;
-	
-     
-  }
+	}
 
-  cout<<"Process-time(s) Arrival-time(s)  Burst-time(s)  Waiting-time(s)  Turnaround-time(s) Exit-time(s)\n";
-
-            for(int i=0;i<n;i++)
-            {
-                cout<<"                "<<at[i]<<"                "<<bt[i]<<"                "<<wt[i]<<"                "<<tat[i]<<"                          "<<endl;
-            }
-
-	
-
-	cout<<"Average waiting time "<<swt*1.0/n<<endl;
-	cout<<"Average turn around time "<<stat*1.0/n<<endl;;
+	cout<<"Average waiting time "<<wt*1.0/n<<endl;
+	cout<<"Average turn around time "<<tat*1.0/n<<endl;;
 
 	return 0;
 }

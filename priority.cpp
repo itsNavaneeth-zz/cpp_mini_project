@@ -2,23 +2,22 @@
  
 using namespace std;
  
-int main()
+ class schedule
 {
-    int bt[20],p[20],wt[20],tat[20],pr[20],i,j,n,total=0,pos,temp,avg_wt,avg_tat;
-    cout<<"Enter Total Number of Process:";
-    cin>>n;
- 
-    cout<<"\nEnter Burst Time and Priority\n";
-    for(i=0;i<n;i++)
-    {
-        cout<<"\nP["<<i+1<<"]\n";
-        cout<<"Burst Time:";
-        cin>>bt[i];
-        cout<<"Priority:";
-        cin>>pr[i];
-        p[i]=i+1;           //contains process number
-    }
- 
+    protected:
+    int processess[5],bt[5],wt[5],at[5],pr[5], n = 5;
+    public:
+    void computePri(int processes[],int bt[], int n, int pr[]);
+};
+
+class priority : public schedule
+{
+    int tat[5],pr[5];
+public:
+void computePri(int processes[],int bt[],int n,int pr[])
+{
+    int i,j,pos,temp;
+    float avg_tat = 0.0,avg_wt = 0.0,total=0.0;
     //sorting burst time, priority and process number in ascending order using selection sort
     for(i=0;i<n;i++)
     {
@@ -37,9 +36,9 @@ int main()
         bt[i]=bt[pos];
         bt[pos]=temp;
  
-        temp=p[i];
-        p[i]=p[pos];
-        p[pos]=temp;
+        temp=processes[i];
+        processes[i]=processes[pos];
+        processes[pos]=temp;
     }
  
     wt[0]=0;            //waiting time for first process is zero
@@ -57,17 +56,45 @@ int main()
     avg_wt=total/n;      //average waiting time
     total=0;
  
-    cout<<"\nProcess\t    Burst Time    \tWaiting Time\tTurnaround Time";
     for(i=0;i<n;i++)
     {
         tat[i]=bt[i]+wt[i];     //calculate turnaround time
         total+=tat[i];
-        cout<<"\nP["<<p[i]<<"]\t\t  "<<bt[i]<<"\t\t    "<<wt[i]<<"\t\t\t"<<tat[i];
+     }
+      avg_tat=total/n; 
+
+      cout << "Process-time(s)\t\tPriority\t\tBurst-time(s)\t\tWaiting-time(s)\t\tTurnaround-time(s)\n";
+
+        for (int i = 0; i < n; i++)
+        {
+            cout << processes[i] << "\t\t\t" << pr[i] << "\t\t\t" << bt[i] << "\t\t\t" << wt[i] << "\t\t\t" << tat[i] << "\t\t\t" << endl;
+        }
+
+       cout << "awt=" << avg_wt << " atat=" << avg_tat; 
     }
- 
-    avg_tat=total/n;     //average turnaround time
-    cout<<"\n\nAverage Waiting Time="<<avg_wt;
-    cout<<"\nAverage Turnaround Time="<<avg_tat;
- 
-    return 0;
+};
+
+int main()
+{
+    
+        int burst_time[5],pri[5];
+         int processes[] = {1, 2, 3, 4, 5};
+        int n=5;
+   
+        for (int i = 0; i < 5; i++)
+        {
+            cout << "Enter burst time for process number " << i + 1 << ": ";
+            cin >> burst_time[i];
+         }
+            
+             for(int i=0;i<5;i++)
+             {
+                 cout<<"Enter priority for process number "<<i+1<<": ";
+                 cin>>pri[i];
+             }
+
+             priority p;
+                 p.computePri(processes,burst_time,n,pri);
+
+                 return 0;
 }

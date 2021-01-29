@@ -33,7 +33,7 @@ class fcfs : public schedule
 
         // Find waiting time for current process =
         // sum - at[i]
-        wt[i] = service_time[i] - at[i];
+        wt[i] = service_time[i] - at[i] + 1;
 
         // If waiting time for a process is in negative
         // that means it is already in the ready queue
