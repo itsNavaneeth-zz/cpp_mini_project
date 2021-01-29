@@ -1,5 +1,3 @@
- for(int i=0;i<5;i++)
-            //  {
-            //      cout<<"Enter priority for process number "<<i+1<<": ";
-            //      cin>>priority[i];
-            //  }
+
+               awt[1] = s.sendAwt();
+               awt[2] = p.sendAwt();
