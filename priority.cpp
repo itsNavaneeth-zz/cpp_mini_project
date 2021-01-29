@@ -1,6 +1,7 @@
 // C++ program for implementation of FCFS
 // scheduling
 #include <bits/stdc++.h>
+#include<iostream>
 using namespace std;
 
 struct Process
