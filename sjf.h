@@ -10,7 +10,7 @@ class sjf : public schedule
         void computeSJF(int processes[],int at[],int n,int bt[])
         {
              int temp,tt=0,min,d,i,j;
-      //average tat , avg wat , sum tat , sum wait time
+      //average tat , avg wt , sum tat , sum wait time
        atat=0;
        awt=0;
        float stat=0,swt=0;
@@ -24,7 +24,7 @@ class sjf : public schedule
                 {  //sort arrival time according to sorted burst time
                       temp=at[i];
                       at[i]=at[j];
-                    at[j]=temp;
+                      at[j]=temp;
 
                       temp=bt[i];
                       bt[i]=bt[j];
@@ -49,6 +49,7 @@ class sjf : public schedule
       e[d]=tt+bt[d];//1+5 = 6
       tt=e[d];//tt = 6
 
+      //compute completion time for each process
       for(i=0;i<n;i++)
       {
             if(at[i]!=min)//false
@@ -80,7 +81,7 @@ class sjf : public schedule
           cout << processes[i] << "\t\t" << at[i] << "\t\t" << bt[i] << "\t\t" << wt[i] << "\t\t" << tat[i] << "\t\t" << e[i] << endl;
             }
 
-            cout<<"Average Waiting Time= "<<awt<<"\nAverage Turn Around Time= "<<atat;  
+            cout<<"Average Waiting Time= "<<awt<<"\nAverage Turn Around Time= "<<atat;
     }
 
     float sendAwt()
@@ -91,6 +92,6 @@ class sjf : public schedule
     {
         return atat;
     }
-  
+
 };
 
