@@ -22,41 +22,71 @@ int main()
             fcfs f;
             sjf s;
             priority p;
+            //adding exceptions
+            int a;
             for (int i = 0; i < 5; i++)
             {
-                cout << "Enter burst time for process number " << i + 1 << ": ";
-                cin >> burst_time[i];
+
+                try
+                {
+                    cout << "Enter burst time for process number " << i + 1 << ": ";
+                    cin>>a;
+                    if(a<0)
+                        throw a;
+                    else
+                        burst_time[i] = a;
+                }
+                catch(int k)
+                {
+                    cout<<"\nBurst Time can never be negative( )\n"<<k<<endl;
+                    cout<<"\nEnter Burst Time Again\n"<<endl;
+                    i = i-1;
+                }
+
             }
                  for (int i = 0; i < 5; i++)
                 {
-                    cout << "Enter arrival time for process number " << i + 1 << ": ";
-                    cin >> arrival_time[i];
+                    try
+                    {
+                        cout << "Enter arrival time for process number " << i + 1 << ": ";
+                        cin>>a;
+                        if(a<0)
+                            throw a;
+                        else
+                            arrival_time[i] = a;
+                    }
+                    catch(int k)
+                    {
+                        cout<<"\nArrival Time can never be negative( )\n"<<k<<endl;
+                        cout<<"\nEnter Arrival time Again\n"<<endl;
+                        i = i-1;
+                    }
                 }
-           
+
             for (int i = 0; i < 5; i++)
             {
                 cout << "Enter priority for process number " << i + 1 << ": ";
                 cin >> pri[i];
             }
-           
+
             break;
         }
         case 2:
-        {//computing tat and wt 
+        {//computing tat and wt
             int processes[] = {1, 2, 3, 4, 5};
             int n = 5;
-        
+
             fcfs f;
             f.findavgTime(processes, n, burst_time, arrival_time);
-            cout<<endl; 
-            cout<<endl; 
+            cout<<endl;
+            cout<<endl;
             sjf s;
             s.computeSJF(processes, arrival_time, n, burst_time);
             cout<<endl;
-            cout<<endl; 
+            cout<<endl;
             priority p;
             p.computePri(processes,burst_time,n,pri);
-            cout<<endl; 
+            cout<<endl;
             break;
         }
       case 3:
@@ -91,6 +121,6 @@ int main()
 
     }
      } while (choice!=4);
-   
+
     return 0;
 }
