@@ -25,6 +25,7 @@ public:
 
     //priority
     void computePri(int processes[],int bt[], int n, int pr[]);
+    
     //fucn to return the ATAT and AWT 
     float sendAwt();
     float sendAtat();
