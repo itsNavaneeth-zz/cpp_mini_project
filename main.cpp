@@ -46,7 +46,7 @@ int main()
                 }
 
             }
-<<<<<<< HEAD
+
                  for (int i = 0; i < 5; i++)
                 {
                     try
@@ -65,14 +65,6 @@ int main()
                         i = i-1;
                     }
                 }
-=======
-            for (int i = 0; i < 5; i++)
-            {
-                cout << "Enter arrival time for process number " << i + 1 << ": ";
-                cin >> arrival_time[i];
-            }
->>>>>>> 62ba130650f81618add9777576d0aa7773e9380a
-
             for (int i = 0; i < 5; i++)
             {
                 cout << "Enter priority for process number " << i + 1 << ": ";
@@ -82,17 +74,15 @@ int main()
             break;
         }
         case 2:
-<<<<<<< HEAD
-        {//computing tat and wt
-=======
+
         { //computing tat and wt
->>>>>>> 62ba130650f81618add9777576d0aa7773e9380a
+
             int processes[] = {1, 2, 3, 4, 5};
             int n = 5;
 
             fcfs f;
             f.findavgTime(processes, n, burst_time, arrival_time);
-<<<<<<< HEAD
+
             cout<<endl;
             cout<<endl;
             sjf s;
@@ -102,17 +92,8 @@ int main()
             priority p;
             p.computePri(processes,burst_time,n,pri);
             cout<<endl;
-=======
             cout << endl;
             cout << endl;
-            sjf s;
-            s.computeSJF(processes, arrival_time, n, burst_time);
-            cout << endl;
-            cout << endl;
-            priority p;
-            p.computePri(processes, burst_time, n, pri);
-            cout << endl;
->>>>>>> 62ba130650f81618add9777576d0aa7773e9380a
             break;
         }
         case 3:
@@ -148,11 +129,7 @@ int main()
         }
     } while (choice != 4);
 
-<<<<<<< HEAD
-    }
-     } while (choice!=4);
 
-=======
->>>>>>> 62ba130650f81618add9777576d0aa7773e9380a
+
     return 0;
 }
